@@ -25,6 +25,8 @@ public class MainManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        loadHighScore();
+
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
         
@@ -86,7 +88,8 @@ public class MainManager : MonoBehaviour
     [System.Serializable]
     class HighScore
     {
-        public int highScore;    
+        public int highScore;
+        public string name;
     }
 
     
@@ -94,6 +97,7 @@ public class MainManager : MonoBehaviour
     {
         HighScore hiScore = new HighScore();
         hiScore.highScore = m_Points;
+        hiScore.name = NameManager.playerName;
 
         string json = JsonUtility.ToJson(hiScore);
 
@@ -109,6 +113,7 @@ public class MainManager : MonoBehaviour
             HighScore hiscore = JsonUtility.FromJson<HighScore>(json);
 
             highestScore = hiscore.highScore;
+            HighScoreText.text = "Best Score: " + hiscore.name + " : " + hiscore.highScore;
         }
     }
 
